@@ -1,0 +1,24 @@
+<div class="container">
+	<div class="row">
+		<form role="form" ng-submit="buildTotem()">
+			<h4>What type of totem are you building?</h4>
+			<div class="btn-group btn-group-lg" ng-init="newTotem.type='dynamic'">
+				<label class="btn btn-primary" ng-model="newTotem.type" btn-radio="'fixed'">
+					Specific Address</label>
+				<label class="btn btn-primary" ng-model="newTotem.type" btn-radio="'dynamic'">
+					Your Location</label>
+			</div>
+			<p ng-show="newTotem.type==='fixed'" class="text-muted">
+				Cool, you can search or enter a specific location after finishing this page.
+			</p>
+			<p ng-show="newTotem.type==='dynamic'" class="text-muted">
+				Awesome, this will be easy.
+			</p>
+			<hr>
+			<h4>What is the totems name?</h4>
+			<input type="text" class="input-lg form-control " ng-model="newTotem.name">
+			<hr>
+			<button role="button" type="submit" class="btn btn-primary btn-lg btn-block">Build Totem</button>
+		</form>
+	</div>
+</div>

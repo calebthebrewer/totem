@@ -1,0 +1,14 @@
+<ui-gmap-google-map
+		class="angular-google-map"
+		center="{longitude: 0, latitude: 0}"
+		zoom="1"
+		mark-click="true"
+		draggable="true">
+<!--	<ui-gmap-search-box template="'view/map-search.tpl.html'" events="searchEvents">
+	</ui-gmap-search-box>-->
+	<ui-gmap-markers
+			models="markers"
+			coords="'self'"
+			fit="true">
+	</ui-gmap-markers>
+</ui-gmap-google-map>

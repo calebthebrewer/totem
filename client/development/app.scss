@@ -1,0 +1,45 @@
+html,
+body {
+	height: 100%;
+}
+
+.main-view {
+	padding-top: 50px;
+	height: 100%;
+}
+
+.slide {
+	position: relative;
+}
+.slide.ng-enter.ng-enter-active {
+	left: 0;
+	opacity: 1;
+}
+.slide.ng-enter {
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+.slide.ng-enter {
+	left: 10px;
+	opacity: 0;
+}
+
+.menu-text {
+	font-size: .8em;
+}
+
+#navigation {
+	.nav-link {
+		padding: 7px 15px;
+
+		.glyphicon {
+			font-size: 2em;
+		}
+
+		.caption {
+			line-height: 28px;
+		}
+	}
+}

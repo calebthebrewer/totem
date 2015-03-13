@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Totem</title>
+	<link rel="stylesheet" href="vendor/vendor.css">
+	<link rel="stylesheet" href="app.css">
+</head>
+<body ng-app="totem">
+<nav id="navigation" ng-controller="navigation" class="navbar navbar-default navbar-fixed-top text-center" ng-class="{hidden: hidden}">
+	<div class="container-fluid">
+		<div class="navbar-header col-sm-2 col-xs-4">
+			<a class="navbar-brand" ui-sref="home">Totem</a>
+		</div>
+		<div id="navbar">
+			<ul class="nav navbar-nav col-xs-8">
+				<li class="col-xs-4">
+					<a ui-sref="find" ui-sref-active="active" class="nav-link">
+						<span class="glyphicon glyphicon-screenshot"></span>
+						<span class="hidden-xs caption">Find</span>
+					</a>
+				</li>
+				<li class="col-xs-4">
+					<a ui-sref="build" ui-sref-active="active" class="nav-link">
+						<span class="glyphicon glyphicon-wrench"></span>
+						<span class="hidden-xs caption">Build</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="main-view" ui-view></div>
+<script src="//maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places&sensor=false&language=en&v=3.17"></script>
+<script src="vendor/vendor.js"></script>
+<script src="templates.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
