@@ -27,5 +27,17 @@ angular.module('totem')
 
 				return defer.promise;
 			};
+
+			this.search = function(name) {
+				var defer = $q.defer();
+
+				$http
+					.get('api/totems/search?name=' + name)
+					.success(function(totems) {
+						defer.resolve(totems);
+					});
+
+				return defer.promise;
+			}
 		}
 	]);

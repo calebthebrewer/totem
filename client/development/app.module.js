@@ -4,10 +4,10 @@ angular.module('totem', [
 	'ui.router',
 	'ngAnimate',
 	'uiGmapgoogle-maps',
-	'btford.socket-io',
 	//my stuff
 	'totem.templates',
 	'totem.view',
 	'totem.build',
-	'totem.home'
+	'totem.home',
+	'totem.find'
 ]);

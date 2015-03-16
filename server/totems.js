@@ -5,23 +5,31 @@ var ObjectId = require('mongojs').ObjectId;
 
 var totems = db.collection('totems');
 
+var rooms = {};
+
 module.exports = {
 	http: function(app) {
 		app.post('/api/totems', buildTotem);
+		app.get('/api/totems/search', searchTotems);
 		app.get('/api/totems/:id', getTotem);
 		app.post('/api/totems/:id/marker', buildMarker);
 	},
 	events: function(socket) {
 		socket.on('join', function(room) {
 			socket.join(room);
+			if (!rooms[room]) rooms[room] = {};
 
 			socket.on('update-marker', function(marker) {
+				if (!rooms[room][socket.id]) rooms[room][socket.id] = marker.id;
 				updateMarker(room, marker);
 				socket.broadcast.to(room).emit('update-marker', marker);
 			});
 
 			socket.on('disconnect', function() {
-
+				var markerId = rooms[room][socket.id];
+				socket.broadcast.to(room).emit('remove-marker', markerId);
+				removeMarker(room, markerId);
+				delete rooms[room][socket.id];
 			});
 		});
 	}
@@ -42,6 +50,21 @@ function buildTotem(req, res) {
 		res
 			.send(totem);
 	});
+}
+
+function searchTotems(req, res) {
+	var query = req.query.name;
+
+	totems
+		.find({name: new RegExp('.*' + query + '.*')}, function(err, totems) {
+			if (!err) {
+				res.send(totems);
+			} else {
+				res
+					.status(500)
+					.send();
+			}
+		});
 }
 
 function buildMarker(req, res) {
@@ -65,7 +88,19 @@ function buildMarker(req, res) {
 
 function getTotem(req, res) {
 	totems.findOne({id: ObjectId(req.params.id)}, function(err, totem) {
-		res.send(totem);
+		if (!err) {
+			if (totem) {
+				res.send(totem);
+			} else {
+				res
+					.status(404)
+					.send();
+			}
+		} else {
+			res
+				.status(500)
+				.send();
+		}
 	});
 }
 
@@ -74,4 +109,12 @@ function updateMarker(totem, marker) {
 		.update(
 		{_id: ObjectId(totem), 'markers.models.id': marker.id},
 		{$set: {'markers.models.$': marker}});
+}
+
+function removeMarker(totem, markerId) {
+	totems
+		.update(
+		{_id: ObjectId(totem), 'markers.models.id': markerId},
+		{$slice: {'markers.models.$': 1}}
+	);
 }
